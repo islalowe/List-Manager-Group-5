@@ -10,6 +10,7 @@ const app = express();
 app.use(express.static("./Client"));
 app.use(express.json());
 
+
 // Define HTTP routes listenting for requests
 app.get("/api", async (req,res) => {
     //TODO from lecture:
