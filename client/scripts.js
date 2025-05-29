@@ -41,7 +41,7 @@ function ShowList() {
 // Function to retrieve the list of tasks from the server 
 async function GetList() {
   try {
-    const response = await api.request("GET", "/list");
+    const response = await http.request("GET", "/list");
     theList = response; //update the block variable theList with the retrieved data
     ShowList();
   } catch (err) {
