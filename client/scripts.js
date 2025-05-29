@@ -1,4 +1,11 @@
 const http = new coreHTTP;
+// This file will use CoreHTTP to:
+// GET the current list from api
+// POST new tasks when a user adds one
+// PUT updates to tasks
+// DELETE tasks 
+
+
 
 // Block Variables
 let theList = [];
