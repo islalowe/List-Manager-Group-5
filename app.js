@@ -2,13 +2,25 @@
 const express = require("express");
 // Get Custom built modules
 const fm = require("./filemgr");
+// Get database connection 
+const connectDB = require("./connect");
+
+// Define port
+port = 8080
 
 // Create the express http server
+const appName = "Task Manager";
 const app = express();
+app.listen(port, () => {
+  console.log(`App ${appName} is running on port ${port}`);
+})
 
 // Define some built-in middleware
 app.use(express.static("./Client"));
 app.use(express.json());
+
+// Data model (schema)
+const data = require("./tasks")
 
 
 // Define HTTP routes listenting for requests
@@ -65,9 +77,3 @@ app.all("*", (req,res) => {
   res.status(404).send("<h1>Page Not Found...</h1>");
 });
 
-// Create a server
-const appName = "Simple List";
-const port = 5000;
-app.listen(port, () => {
-  console.log(`App ${appName} is running on port ${port}`);
-})
