@@ -17,14 +17,26 @@ app.use(express.static(path.join(__dirname, "Client")));
 app.use(express.json()); // Parse  JSON
 
 // Route to GET the current list
-app.get("/api/list", async (req, res) => {
-  try {
-    const list = await fm.ReadData();
-    res.json(list);
-  } catch (err) {
-    res.status(500).json({ message: "Error reading list", error: err.message });
+// app.get("/api/list", async (req, res) => {
+//   try {
+//     const list = await fm.ReadData();
+//     res.json(list);
+//   } catch (err) {
+//     res.status(500).json({ message: "Error reading list", error: err.message });
+//   }
+// });
+async function GetList() {
+    try {
+      const response = await http.request("GET", "/list");
+      console.log("Response from server:", response); // <--- This is the key line
+      theList = response;
+      ShowList();
+    } catch (err) {
+      result.innerHTML = `Error: ${err.message}`;
+      console.error("Fetch error:", err);
+    }
   }
-});
+  
 
 // Route to POST an updated list
 app.post("/api/list", async (req, res) => {
@@ -35,11 +47,6 @@ app.post("/api/list", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Error saving list", error: err.message });
   }
-});
-
-// Catch-all route for undefined paths
-app.all("*", (req, res) => {
-  res.status(404).send("<h1>404 Not Found</h1>");
 });
 
 // Start the server
