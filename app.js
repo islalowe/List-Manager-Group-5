@@ -1,6 +1,12 @@
 // Import required modules
+//todo debug
+console.log("loading express ")
 const express = require("express");
+//todo debug
+console.log("loading path ")
 const path = require("path");
+//todo debug
+console.log("loading filemgr ")
 const fm = require("./filemgr"); 
 
 // Create the Express app
