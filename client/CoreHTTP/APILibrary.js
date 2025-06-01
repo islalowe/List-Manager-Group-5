@@ -54,7 +54,7 @@ class APILibrary {
   
   //todo we aren't using the proxy server any more 
   //const api = new APILibrary("https://api.allorigins.win/raw?url=https://jsonplaceholder.typicode.com");
-  const api = new APILibrary("http://localhost:3000/api");
+  //const api = new APILibrary("http://localhost:3000/api");
 
   
   document.getElementById("send").addEventListener("click", async () => {
@@ -73,4 +73,5 @@ class APILibrary {
       responseBox.textContent = `Error: ${err.message}`;
     }
   });
+
   
