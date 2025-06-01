@@ -1,79 +1,45 @@
-// Get 3rd Party modules
+// Load 3rd-party modules
 const express = require("express");
-// Get Custom built modules
+const path = require("path");
+
+// Load custom file manager module
 const fm = require("./filemgr");
-// Get database connection 
-const connectDB = require("./connect");
 
-// Define port
-port = 8080
-
-// Create the express http server
-const appName = "Task Manager";
+// Create the express app
 const app = express();
-app.listen(port, () => {
-  console.log(`App ${appName} is running on port ${port}`);
-})
 
-// Define some built-in middleware
-app.use(express.static("./Client"));
-app.use(express.json());
+// Middleware
+app.use(express.static(path.join(__dirname, "Client"))); // serve static files (HTML, CSS, JS)
+app.use(express.json()); // parse JSON bodies
 
-// Data model (schema)
-const data = require("./tasks")
-
-
-// Define HTTP routes listenting for requests
-app.get("/api", async (req, res) => {
+// GET the current list
+app.get("/api/list", async (req, res) => {
   try {
-    const list = await fm.readList();
-    res.json(list);
+    const data = await fm.ReadData();
+    res.json(data);
   } catch (err) {
-    res.status(500).json({ error: "Failed to read list." });
+    res.status(500).json({ message: "Error reading list data", error: err.message });
   }
 });
 
-app.post("/api", async (req, res) => {
+// POST a new list 
+app.post("/api/list", async (req, res) => {
   try {
-    const newItem = req.body.item;
-    const list = await fm.readList();
-    list.push(newItem);
-    await fm.writeList(list);
-    res.status(201).json({ message: "Item added", list });
+    const newList = req.body;
+    await fm.WriteData(newList);
+    res.status(200).json({ message: "List saved successfully" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to add item." });
+    res.status(500).json({ message: "Error writing list data", error: err.message });
   }
 });
 
-app.put("/api", async (req, res) => {
-  try {
-    const newList = req.body.list;
-    await fm.writeList(newList);
-    res.json({ message: "List replaced", list: newList });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to replace list." });
-  }
+// Catch-all for undefined routes
+app.all("*", (req, res) => {
+  res.status(404).send("<h1>404 Not Found</h1>");
 });
 
-app.delete("/api", async (req, res) => {
-  try {
-    const index = parseInt(req.body.index);
-    const list = await fm.readList();
-    if (index >= 0 && index < list.length) {
-      const removed = list.splice(index, 1);
-      await fm.writeList(list);
-      res.json({ message: "Item deleted", removed, list });
-    } else {
-      res.status(400).json({ error: "Invalid index" });
-    }
-  } catch (err) {
-    res.status(500).json({ error: "Failed to delete item." });
-  }
+// Start server
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
-
-
-// page not found route
-app.all("*", (req,res) => {
-  res.status(404).send("<h1>Page Not Found...</h1>");
-});
-

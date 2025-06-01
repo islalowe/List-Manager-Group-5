@@ -2,16 +2,13 @@
 //const http = new coreHTTP;
 
 // The library made in the first project
-const http = new APILibrary("http://localhost:3000/api"); // local server with port 3000
+const http = new APILibrary("http://localhost:5000/api"); // local server with port 3000
 
 // This file will use CoreHTTP to:
 // GET the current list from api
 // POST new tasks when a user adds one
 // PUT updates to tasks
 // DELETE tasks 
-
-
-
 
 
 
@@ -54,7 +51,7 @@ async function WriteList() {
   try {
     await http.request("POST", "/list", "", JSON.stringify(theList))
     await GetList(); // Refresh the list display after writing
-  } catch {
+  } catch (err) {
 result.innerHTML = `Error: ${err.message}`;
   }
 }

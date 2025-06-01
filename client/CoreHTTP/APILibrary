@@ -52,19 +52,19 @@ class APILibrary {
   //const api = new APILibrary("https://api.allorigins.win/raw?url=https://jsonplaceholder.typicode.com");
   const api = new APILibrary("");
   
-  document.getElementById("send").addEventListener("click", async () => {
-    const method = document.getElementById("method").value;
-    const endpoint = document.getElementById("endpoint").value.trim();
-    const query = document.getElementById("query").value.trim();
-    const body = document.getElementById("body").value.trim();
-    const responseBox = document.getElementById("response");
+  // document.getElementById("send").addEventListener("click", async () => {
+  //   const method = document.getElementById("method").value;
+  //   const endpoint = document.getElementById("endpoint").value.trim();
+  //   const query = document.getElementById("query").value.trim();
+  //   const body = document.getElementById("body").value.trim();
+  //   const responseBox = document.getElementById("response");
   
-    responseBox.textContent = "Loading...";
+  //   responseBox.textContent = "Loading...";
   
-    try {
-      const result = await api.request(method, endpoint, query, body);
-      responseBox.textContent = JSON.stringify(result, null, 2);
-    } catch (err) {
-      responseBox.textContent = `Error: ${err.message}`;
-    }
-  });
+  //   try {
+  //     const result = await api.request(method, endpoint, query, body);
+  //     responseBox.textContent = JSON.stringify(result, null, 2);
+  //   } catch (err) {
+  //     responseBox.textContent = `Error: ${err.message}`;
+  //   }
+  // });
