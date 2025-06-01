@@ -1,12 +1,6 @@
 // Import required modules
-//todo debug
-console.log("loading express ")
 const express = require("express");
-//todo debug
-console.log("loading path ")
 const path = require("path");
-//todo debug
-console.log("loading filemgr ")
 const fm = require("./filemgr"); 
 
 // Create the Express app
@@ -37,6 +31,26 @@ app.post("/api/list", async (req, res) => {
     res.status(500).json({ message: "Error saving list", error: err.message });
   }
 });
+
+//Route to PUT an updated item
+app.put("/api/list/:index", async (req, res) => {
+    try {
+      const index = parseInt(req.params.index);
+      const updatedItem = req.body.item;
+      const list = await fm.ReadData();
+  
+      if (index < 0 || index >= list.length) {
+        return res.status(400).json({ message: "Invalid index" });
+      }
+  
+      list[index] = updatedItem;
+      await fm.WriteData(list);
+      res.status(200).json({ message: "Item updated", list });
+    } catch (err) {
+      res.status(500).json({ message: "Error updating item", error: err.message });
+    }
+  });
+  
 
 // Start the server
 const PORT = 3000;

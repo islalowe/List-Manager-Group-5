@@ -19,16 +19,11 @@ class APILibrary {
       headers: { 'Content-Type': 'application/json' }
     };
 
-    if (body && ['POST'].includes(method.toUpperCase())) {
-      // If body is already an object, keep it; otherwise try parsing it
-      if (typeof body === 'object') {
-        options.body = JSON.stringify(body);
+    if (body && ['POST', 'PUT', 'PATCH'].includes(method.toUpperCase())) {
+      if (typeof body === 'string') {
+        options.body = body;
       } else {
-        try {
-          options.body = JSON.stringify(JSON.parse(body));
-        } catch (e) {
-          throw new Error('Invalid JSON in request body');
-        }
+        options.body = JSON.stringify(body);
       }
     }
 

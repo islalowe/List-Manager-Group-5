@@ -1,17 +1,9 @@
-
 // The library made in the first project
 const http = new APILibrary("http://localhost:3000/api"); // local server with port 3000
 
-// This file will use CoreHTTP to:
-// GET the current list from api
-// POST new tasks when a user adds one
-// PUT updates to tasks
-// DELETE tasks 
-
-
-
 // Block Variables
 let theList = [];
+//const updateButton = document.getElementById("update-btn");
 
 // setup selectors
 const result = document.querySelector(".result");
@@ -69,7 +61,6 @@ async function httpPost(e) {
 }
 
 // Function to update theList by deleting a task
-//todo: I made it async
 async function httpDelete(e) {
   e.preventDefault();  // To stop the form from submitting
   if (theList.length === 0) {
@@ -79,6 +70,28 @@ async function httpDelete(e) {
   theList.pop(); // Remove last item
   await WriteList(); // Send updated list to server and refresh display
 }
+
+
+// Function to update individual items
+const updateButton = document.getElementById("update-btn");
+updateButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const index = parseInt(document.getElementById("update-index").value);
+  const newText = document.getElementById("update-text").value.trim();
+
+  if (isNaN(index) || newText === "") {
+    result.innerHTML = "Please enter a valid index and item text.";
+    return;
+  }
+
+  try {
+    await http.request("PUT", `/list/${index}`, "", JSON.stringify({ item: newText }));
+    await GetList(); // Refresh the list display
+  } catch (err) {
+    result.innerHTML = `Error updating item: ${err.message}`;
+  }
+});
+
 
 
 // Loading functions
