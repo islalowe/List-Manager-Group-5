@@ -2,7 +2,7 @@
 //const http = new coreHTTP;
 
 // The library made in the first project
-const http = new APILibrary("http://localhost:5000/api"); // local server with port 3000
+const http = new APILibrary("http://localhost:3000/api"); // local server with port 3000
 
 // This file will use CoreHTTP to:
 // GET the current list from api
