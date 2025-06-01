@@ -14,14 +14,12 @@ class APILibrary {
   async request(method, endpoint, queryParams = '', body = null) {
     const url = this.buildURL(endpoint, queryParams);
 
-    console.log("Sending request to:", url); // Debug log
-
     const options = {
       method,
       headers: { 'Content-Type': 'application/json' }
     };
 
-    if (body && ['POST', 'PUT', 'PATCH'].includes(method.toUpperCase())) {
+    if (body && ['POST'].includes(method.toUpperCase())) {
       // If body is already an object, keep it; otherwise try parsing it
       if (typeof body === 'object') {
         options.body = JSON.stringify(body);

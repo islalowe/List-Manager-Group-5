@@ -2,12 +2,6 @@
 const fs = require("fs/promises")
 const path = require("path");
 
-//todo not sure if this chunk is necessary
-// import { readFile, writeFile, appendFile, unlink, mkdir, rmdir, stat } from "fs/promises";
-// import path from "path";
-// import { getFilePath, getNewPath, getDirName } from "./utils.mjs";
-//todo
-
 // dataFile is a variable for whatever the literal file name happens to be
 const dataFile = path.join(__dirname, "listdata.json");
 

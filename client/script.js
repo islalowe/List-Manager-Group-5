@@ -1,5 +1,3 @@
-//todo: commented this out, it was the example but the assignment says to use the library made in the first project
-//const http = new coreHTTP;
 
 // The library made in the first project
 const http = new APILibrary("http://localhost:3000/api"); // local server with port 3000

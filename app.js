@@ -17,25 +17,14 @@ app.use(express.static(path.join(__dirname, "Client")));
 app.use(express.json()); // Parse  JSON
 
 // Route to GET the current list
-// app.get("/api/list", async (req, res) => {
-//   try {
-//     const list = await fm.ReadData();
-//     res.json(list);
-//   } catch (err) {
-//     res.status(500).json({ message: "Error reading list", error: err.message });
-//   }
-// });
-async function GetList() {
+app.get("/api/list", async (req, res) => {
     try {
-      const response = await http.request("GET", "/list");
-      console.log("Response from server:", response); // <--- This is the key line
-      theList = response;
-      ShowList();
+      const list = await fm.ReadData();
+      res.json(list);
     } catch (err) {
-      result.innerHTML = `Error: ${err.message}`;
-      console.error("Fetch error:", err);
+      res.status(500).json({ message: "Error reading list", error: err.message });
     }
-  }
+  });
   
 
 // Route to POST an updated list
