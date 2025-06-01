@@ -1,7 +1,7 @@
 // This is a helper class from the first project, and it helps with intereacting with the server in the 4 ways (GET, PUT, POST, DELETE)
 
 
-  class APILibrary {
+class APILibrary {
     constructor(baseURL) {
       this.baseURL = baseURL;
     }
